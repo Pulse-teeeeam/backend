@@ -21,7 +21,8 @@ from .schema import schema
 from .admin import admin_site
 
 urlpatterns = [
-    path('jet/', include('jet.urls', 'jet')),
-    path('admin/', admin_site.urls),
-    path("graphql/", GraphQLView.as_view(graphiql=True, schema=schema)),
+    path('backend/jet/', include('jet.urls', 'jet')),
+    path('backend/admin/', admin_site.urls),
+    path("backend/graphql/", GraphQLView.as_view(graphiql=True, schema=schema)),
 ]
+
