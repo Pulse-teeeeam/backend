@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'graphene_django',
     'graphql_jwt',
     'corsheaders',
-    'account'
+
+    'account',
+    'person',
 ]
 
 CSRF_TRUSTED_ORIGINS = [

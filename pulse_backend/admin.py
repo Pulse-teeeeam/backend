@@ -1,8 +1,5 @@
-from django.contrib.admin import AdminSite
+from django.contrib import admin
 
-class MyAdminSite(AdminSite):
-    site_title = 'Pulse'
-    site_header = 'Pulse'
-    index_title = 'Pulse'
-
-admin_site = MyAdminSite()
+admin.site.site_title = 'HistoryLib'
+admin.site.site_header = 'HistoryLib'
+admin.site.index_title = 'HistoryLib'

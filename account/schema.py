@@ -3,7 +3,7 @@ import graphql_jwt
 from graphql_jwt.shortcuts import get_token
 from graphene_django.types import DjangoObjectType
 from django.contrib.auth import get_user_model
-import uuid  # Добавляем импорт uuid
+import uuid
 
 User = get_user_model()
 
