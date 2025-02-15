@@ -16,6 +16,11 @@ class MedalSerializer(serializers.ModelSerializer):
         model = models.Medals
         fields = ['image', 'title', 'id']
 
+class PersonCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Person
+        fields = '__all__'
+
 class PersonSerializer(serializers.ModelSerializer):
     medals = MedalSerializer(many=True)
     files = FilesSerializer(many=True)

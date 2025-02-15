@@ -45,6 +45,11 @@ CORS_ALLOW_CREDENTIALS = True
 
 # Application definition
 
+ELC_TOKEN = 'BVMACqY9GvtoX54w24pVeYNKQcMHjPXxzhLVt3NV'
+ELC_ID = 30
+ELC_STATE = 'https://hackathon-9.orb.ru/backend/auth/ELC'
+ELC_REDIRECT = 'https://hackathon-9.orb.ru/panel/auth/login'
+
 INSTALLED_APPS = [
     'jet', # Admin Theme
     'django.contrib.admin',
@@ -55,10 +60,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_spectacular',
-    'graphene_django',
-    'graphql_jwt',
     'corsheaders',
     'storages',
+    'rest_framework.authtoken',
 
     'account',
     'person',
