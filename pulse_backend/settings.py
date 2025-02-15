@@ -27,6 +27,21 @@ DEBUG = config('DJANGO_DEBUG', cast=bool, default=False)
 
 ALLOWED_HOSTS = ['*']
 
+SITES_DOMAINS = [
+    "https://pulse-work.ru/",
+]
+
+if DEBUG:
+    SITES_DOMAINS += [
+        "http://localhost:3000",
+    ]
+
+
+CORS_ALLOWED_ORIGINS = SITES_DOMAINS
+CORS_ORIGIN_WHITELIST = SITES_DOMAINS
+CSRF_TRUSTED_ORIGINS = SITES_DOMAINS
+
+CORS_ALLOW_CREDENTIALS = True
 
 # Application definition
 
@@ -38,21 +53,46 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'drf_spectacular',
     'graphene_django',
     'graphql_jwt',
     'corsheaders',
+    'storages',
 
     'account',
     'person',
 ]
 
-CSRF_TRUSTED_ORIGINS = [
-    'http://127.0.0.1:8000',
-    'http://localhost:8000',
-    'http://localhost:3000',
-]
+REST_FRAMEWORK = {
+    # YOUR SETTINGS
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
 
-CSRF_COOKIE_SECURE = False
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Your Project API',
+    'DESCRIPTION': 'Your project description',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "OPTIONS": {
+            'access_key': '8NG38OE6JC6G4WQPR5BX',
+            'secret_key': 'iyl2ookC7H3o1Dx1i6FYABg4TahclKaxis1NPB9a',
+            'bucket_name': '42d8bf36-047de542-227f-4fc0-ab34-af47e3d49b7e',
+            'endpoint_url': 'https://s3.timeweb.cloud',
+            'region_name': 'ru-1',
+            'file_overwrite': True,
+            'use_ssl': False,
+        },
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
 
 GRAPHENE = {
     'SCHEMA': 'pulse_backend.schema.schema',
@@ -158,6 +198,9 @@ if DEBUG:
     STATICFILES_DIRS = ['static']
 else:
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# MEDIA_URL = '/mediafiles/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

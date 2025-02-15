@@ -18,10 +18,14 @@ from django.urls import path, include
 from graphene_django.views import GraphQLView
 from .schema import schema
 from .admin import admin
+from rest_framework import permissions
+from drf_spectacular.views import SpectacularSwaggerView, SpectacularAPIView
 
 urlpatterns = [
     path('backend/jet/', include('jet.urls', 'jet')),
     path('backend/admin/', admin.site.urls),
     path("backend/graphql/", GraphQLView.as_view(graphiql=True, schema=schema)),
+    path('backend/person/', include('person.urls')),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
 ]
-

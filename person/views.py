@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from . import models, serializers
+from rest_framework import generics, response, status
 
-# Create your views here.
+class GetPerson(generics.RetrieveAPIView):
+    queryset = models.Person.objects.all()
+    serializer_class = serializers.PersonSerializer
+
+class CreatePerson(generics.CreateAPIView):
+    queryset = models.Person.objects.all()
+    serializer_class = serializers.PersonSerializer

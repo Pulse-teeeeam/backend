@@ -1,4 +1,6 @@
 from django.contrib import admin
-from person.models import Person
+from . import models
 
-admin.site.register(Person)
+admin.site.register(models.Person)
+admin.site.register(models.ArmedConflict)
+admin.site.register(models.Medals)

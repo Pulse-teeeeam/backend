@@ -1,0 +1,104 @@
+openapi: 3.0.3
+info:
+  title: Your Project API
+  version: 1.0.0
+  description: Your project description
+paths:
+  /backend/person/get/{id}/:
+    get:
+      operationId: backend_person_get_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - backend
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+          description: ''
+components:
+  schemas:
+    Person:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        last_name:
+          type: string
+          title: Фамилия
+          maxLength: 100
+        first_name:
+          type: string
+          title: Имя
+          maxLength: 100
+        middle_name:
+          type: string
+          nullable: true
+          title: Отчество
+          maxLength: 100
+        date_of_birth:
+          type: string
+          format: date
+          title: Дата рождения
+        place_of_birth:
+          type: string
+          title: Место рождения
+          maxLength: 255
+        military_commissariat:
+          type: string
+          title: Наименование военного комиссариата
+          maxLength: 255
+        military_rank:
+          type: string
+          title: Воинское звание
+          maxLength: 100
+        awards:
+          type: string
+          title: Награды
+        date_of_death:
+          type: string
+          format: date
+          title: Дата гибели или смерти
+        burial_place:
+          type: string
+          title: Место захоронения
+          maxLength: 255
+        biography_facts:
+          type: string
+          nullable: true
+          title: Иные факты биографии
+        conflicts_participated:
+          type: array
+          items:
+            type: integer
+      required:
+      - awards
+      - burial_place
+      - conflicts_participated
+      - date_of_birth
+      - date_of_death
+      - first_name
+      - id
+      - last_name
+      - military_commissariat
+      - military_rank
+      - place_of_birth
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
