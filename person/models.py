@@ -2,6 +2,18 @@ from django.db import models
 
 # TODO: Добавить другие файлы
 
+class Files(models.Model):
+    file = models.FileField(upload_to='files', verbose_name='Файлы')
+    title = models.CharField(max_length=100, verbose_name='Название файла')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Файл'
+        verbose_name_plural = 'Файлы'
+
+
 class ArmedConflict(models.Model):
     title = models.CharField(max_length=100, verbose_name='Название военного конфликта')
 
@@ -31,12 +43,15 @@ class Person(models.Model):
     place_of_birth = models.CharField(max_length=255, verbose_name='Место рождения')
     military_commissariat = models.CharField(max_length=255, verbose_name='Наименование военного комиссариата')
     military_rank = models.CharField(max_length=100, verbose_name='Воинское звание')
-    conflicts_participated = models.ForeignKey(ArmedConflict, verbose_name='Конфликты', blank=True, null=True, on_delete=models.SET_NULL)
-    awards = models.TextField(verbose_name='Награды')
+    armed_conflict = models.ForeignKey(ArmedConflict, verbose_name='Конфликты', blank=True, null=True, on_delete=models.SET_NULL)
+    medals = models.ManyToManyField(Medals, verbose_name='Награды')
     date_of_death = models.DateField(verbose_name='Дата гибели или смерти')
     burial_place = models.CharField(max_length=255, verbose_name='Место захоронения')
-    biography_facts = models.TextField(verbose_name='Иные факты биографии', blank=True, null=True)
+    biography = models.TextField(verbose_name='Биография', blank=True, null=True)
     photo = models.ImageField(verbose_name='Фото', upload_to="photos/", blank=True, null=True)
+    files = models.ManyToManyField(Files, verbose_name='Доп. файлы', blank=True)
+
+    public = models.BooleanField(verbose_name='Опубликовано?', default=False)
 
     def __str__(self):
         return f"{self.last_name} {self.first_name} {self.middle_name or ''}".strip()
