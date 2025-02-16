@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ['*']
 
 SITES_DOMAINS = [
     "https://pulse-work.ru",
+    "https://hackathon-9.orb.ru",
 ]
 
 if DEBUG:
