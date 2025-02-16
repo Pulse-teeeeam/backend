@@ -52,10 +52,11 @@ CORS_ALLOW_CREDENTIALS = True
 
 # Application definition
 
+AUTH_USER_MODEL = 'account.CustomUser'
 ELC_TOKEN = 'BVMACqY9GvtoX54w24pVeYNKQcMHjPXxzhLVt3NV'
 ELC_ID = 30
 ELC_STATE = 'https://hackathon-9.orb.ru/backend/auth/ELC'
-ELC_REDIRECT = 'https://hackathon-9.orb.ru/panel/auth/login'
+ELC_REDIRECT = 'https://hackathon-9.orb.ru/backend/auth/ELC'
 
 INSTALLED_APPS = [
     'jet', # Admin Theme
