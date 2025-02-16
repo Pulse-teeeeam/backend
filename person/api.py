@@ -1,4 +1,7 @@
 import httpx
+from . import models
+from .random_point import random_point
+
 
 class Geois2Client:
     RESOURCE_ID = 8800
@@ -18,11 +21,26 @@ class Geois2Client:
         print(resp.text)
         print(resp.url)
 
-    def create_person(self):
-        resp = self.client.post('/feature/')
-        print(resp.url)
-        print(resp.text)
-
+    def create_person(self, person: models.Person.objects):
+        data = {
+            'extensions': {
+                'attachment': None,
+                'description': None,
+            },
+            'fields': {
+                'num': person.id,
+                'n_raion': person.place_of_birth,
+                'fio': f'{person.first_name} {person.last_name} {person.middle_name}',
+                'years': f'{person.burial_place} - {person.date_of_death}',
+                'info': f'{person.biography}',
+                'kontrakt': person.armed_conflict.title,
+                'nagrads': f'{[medal.title for medal in person.medals.all()]}'
+            },
+            'geom': random_point(person.place_of_birth)
+        }
+        resp = self.client.post('/feature/', json=data)
+        resp_js = resp.json()
+        return resp_js['id']
 
 client = Geois2Client()
 
