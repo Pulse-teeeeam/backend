@@ -37,6 +37,9 @@ class FindPerson(generics.GenericAPIView):
             elif value:
                 filters &= Q(**{key + '__iexact': value})
 
+        if not self.request.user.is_authenticated:
+            filters &= Q(public=True)
+
         queryset = models.Person.objects.filter(filters) if filters else models.Person.objects.all()
 
         serializer = self.get_serializer(queryset, many=True)
