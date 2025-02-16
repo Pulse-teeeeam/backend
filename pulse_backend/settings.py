@@ -28,7 +28,7 @@ DEBUG = config('DJANGO_DEBUG', cast=bool, default=False)
 ALLOWED_HOSTS = ['*']
 
 SITES_DOMAINS = [
-    "https://pulse-work.ru/",
+    "https://pulse-work.ru",
 ]
 
 if DEBUG:
