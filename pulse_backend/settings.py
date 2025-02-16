@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+from logging import DEBUG
 from pathlib import Path
 import os
 from decouple import config
@@ -168,7 +168,7 @@ DATABASES = {
         "NAME": 'postgres',
         "USER": 'postgres',
         "PASSWORD": 'Pc7ce&~&a5c4HDso&hh',
-        "HOST": '127.0.0.1',
+        "HOST": 'postgres-service.pulse.svc.cluster.local' if DEBUG else '127.0.0.1',
         "PORT": '5432',
     }
 }
