@@ -45,6 +45,8 @@ CORS_ALLOW_HEADERS = [
     "authorization",
     "www-authenticate",
 ]
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -132,11 +134,6 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Разрешить доступ только с этого домена
-]
 
 ROOT_URLCONF = 'pulse_backend.urls'
 
