@@ -59,3 +59,21 @@ class Person(models.Model):
     class Meta:
         verbose_name = 'Боец'
         verbose_name_plural = 'Бойцы'
+
+
+class Logging(models.Model):
+    user = models.OneToOneField('account.CustomUser', on_delete=models.CASCADE)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    EVENTS = (
+        ('create', 'Создание'),
+        ('edit', 'Изменение'),
+    )
+    event = models.CharField(max_length=10, choices=EVENTS)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.event} {self.person}"
+
+    class Meta:
+        verbose_name = 'Лог'
+        verbose_name_plural = 'Логи'

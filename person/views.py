@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from django.db.models import Q
 
 
+
 class GetPerson(generics.RetrieveAPIView):
     queryset = models.Person.objects.all()
     serializer_class = serializers.PersonSerializer
@@ -17,6 +18,14 @@ class CreatePerson(generics.CreateAPIView):
     queryset = models.Person.objects.all()
     serializer_class = serializers.PersonCreateSerializer
 
+    def perform_create(self, serializer):
+        person = serializer.save()
+        models.Logging.objects.create(
+            user=self.request.user,
+            person=person,
+            event='create',
+        )
+
 class ArmedConflictsList(generics.ListAPIView):
     queryset = models.ArmedConflict.objects.all()
     serializer_class = serializers.ArmedConflictSerializer
@@ -24,6 +33,14 @@ class ArmedConflictsList(generics.ListAPIView):
 class UpdatePerson(generics.UpdateAPIView):
     queryset = models.Person.objects.all()
     serializer_class = serializers.PersonCreateSerializer
+
+    def perform_update(self, serializer):
+        person = serializer.save()
+        models.Logging.objects.create(
+            user=self.request.user,
+            person=person,
+            event='edit',
+        )
 
 class FindPerson(generics.GenericAPIView):
     serializer_class = serializers.PersonSerializer
