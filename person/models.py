@@ -62,7 +62,7 @@ class Person(models.Model):
 
 
 class Logging(models.Model):
-    user = models.OneToOneField('account.CustomUser', on_delete=models.CASCADE)
+    user = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE)
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     EVENTS = (
         ('create', 'Создание'),

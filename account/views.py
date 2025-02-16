@@ -6,6 +6,13 @@ from django.http import HttpResponseRedirect
 from . import serializers, api_elc, models
 from django.contrib.auth import get_user_model
 
+class GetMeView(generics.RetrieveAPIView):
+    queryset = models.CustomUser.objects.all()
+    serializer_class = serializers.UserMeSerializer
+
+    def get_object(self):
+        return self.request.user
+
 class LoginView(generics.GenericAPIView):
     serializer_class = serializers.LoginSerializer
 

@@ -2,7 +2,8 @@ from . import models, serializers
 from rest_framework import generics, response, status
 from rest_framework.response import Response
 from django.db.models import Q
-
+from rest_framework.views import APIView
+from .ai import generate
 
 
 class GetPerson(generics.RetrieveAPIView):
@@ -29,6 +30,10 @@ class CreatePerson(generics.CreateAPIView):
 class ArmedConflictsList(generics.ListAPIView):
     queryset = models.ArmedConflict.objects.all()
     serializer_class = serializers.ArmedConflictSerializer
+
+class MedalsList(generics.ListAPIView):
+    queryset = models.Medals.objects.all()
+    serializer_class = serializers.MedalSerializer
 
 class UpdatePerson(generics.UpdateAPIView):
     queryset = models.Person.objects.all()
@@ -62,3 +67,8 @@ class FindPerson(generics.GenericAPIView):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
+class GenerateAI(APIView):
+    def post(self, request, *args, **kwargs):
+        person_id = int(kwargs['pk'])
+        person = models.Person.objects.get(id=person_id)
+        return response.Response({'text': generate(person)})
