@@ -162,9 +162,13 @@ WSGI_APPLICATION = 'pulse_backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": 'postgres',
+        "USER": 'postgres',
+        "PASSWORD": 'Pc7ce&~&a5c4HDso&hh',
+        "HOST": 'postgres-service.pulse.svc.cluster.local',
+        "PORT": '5432',
     }
 }
 
