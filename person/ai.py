@@ -1,8 +1,12 @@
 from openai import OpenAI
 from . import models
+import httpx
+
+client = httpx.Client(proxy='http://anu3yl5fmt-corp.mobile.res-country-US-hold-session-session-673336dc98054:IZGLt6XaW30dPdhW@93.190.139.6:9999')
 
 client = OpenAI(
-  api_key="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"
+  api_key="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",
+    http_client=client,
 )
 
 def generate(data: models.Person):
