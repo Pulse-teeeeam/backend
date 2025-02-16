@@ -1,6 +1,7 @@
 from . import models, serializers
 from rest_framework import generics, response, status
 from rest_framework.response import Response
+from django.db.models import Q
 
 
 class GetPerson(generics.RetrieveAPIView):
@@ -9,7 +10,7 @@ class GetPerson(generics.RetrieveAPIView):
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
-            return self.queryset.filter()
+            return self.queryset.all()
         return self.queryset.filter(public=True)
 
 class CreatePerson(generics.CreateAPIView):
@@ -24,8 +25,6 @@ class UpdatePerson(generics.UpdateAPIView):
     queryset = models.Person.objects.all()
     serializer_class = serializers.PersonCreateSerializer
 
-from django.db.models import Q
-
 class FindPerson(generics.GenericAPIView):
     serializer_class = serializers.PersonSerializer
 
@@ -33,7 +32,9 @@ class FindPerson(generics.GenericAPIView):
         search_params = request.data
         filters = Q()
         for key, value in search_params.items():
-            if value:
+            if key == 'armed_conflict':
+                filters |= Q(**{key: value})
+            elif value:
                 filters &= Q(**{key + '__iexact': value})
 
         queryset = models.Person.objects.filter(filters) if filters else models.Person.objects.all()

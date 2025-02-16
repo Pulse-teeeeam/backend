@@ -40,6 +40,11 @@ if DEBUG:
 CORS_ALLOWED_ORIGINS = SITES_DOMAINS
 CORS_ORIGIN_WHITELIST = SITES_DOMAINS
 CSRF_TRUSTED_ORIGINS = SITES_DOMAINS
+CORS_ALLOW_HEADERS = [
+    "content-type",
+    "authorization",
+    "www-authenticate",
+]
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -59,18 +64,22 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'drf_spectacular',
     'corsheaders',
     'storages',
-    'rest_framework.authtoken',
 
     'account',
     'person',
 ]
 
 REST_FRAMEWORK = {
-    # YOUR SETTINGS
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ]
 }
 
 SPECTACULAR_SETTINGS = {
