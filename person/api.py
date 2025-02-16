@@ -1,6 +1,7 @@
 import httpx
 from . import models
 from .random_point import random_point
+import requests
 
 
 class Geois2Client:
@@ -8,13 +9,11 @@ class Geois2Client:
     BASE_URL = f'https://geois2.orb.ru/api/resource/8800'
 
     def __init__(self):
-        self.client = httpx.Client(
-            base_url=self.BASE_URL,
-            headers={
-                'Accept': 'application/json',
-                'Authorization': 'Basic aGFja2F0aG9uXzI1OmhhY2thdGhvbl8yNV8yNQ=='
-            }
-        )
+        self.client = requests.Session()
+        self.client.headers = {'Accept': 'application/json',
+                               'Authorization': 'Basic aGFja2F0aG9uXzI1OmhhY2thdGhvbl8yNV8yNQ=='
+                               }
+
 
     def get(self):
         resp = self.client.get('')
@@ -38,12 +37,19 @@ class Geois2Client:
             },
             'geom': random_point(person.place_of_birth)
         }
-        resp = self.client.post('/feature/', json=data)
+        resp = self.client.post(self.BASE_URL + '/feature/', json=data)
         resp_js = resp.json()
         return resp_js['id']
+
+    def delete_person(self, person_id: int):
+        data = [{'id': person_id}]
+        resp = self.client.delete(self.BASE_URL + f'/feature/', json=data)
+        resp_js = resp.json()
+        print(resp_js)
+
 
 client = Geois2Client()
 
 if __name__ == '__main__':
-    client.create_person()
+    client.delete_person(541)
 

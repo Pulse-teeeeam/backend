@@ -168,7 +168,7 @@ DATABASES = {
         "NAME": 'postgres',
         "USER": 'postgres',
         "PASSWORD": 'Pc7ce&~&a5c4HDso&hh',
-        "HOST": 'postgres-service.pulse.svc.cluster.local',
+        "HOST": '127.0.0.1',
         "PORT": '5432',
     }
 }
